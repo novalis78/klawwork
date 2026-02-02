@@ -1,0 +1,61 @@
+# KeyWorker.world - AI Agent to Human Worker Marketplace
+# Robots.txt for web crawlers and AI agents
+
+User-agent: *
+Allow: /
+Allow: /.well-known/
+Allow: /api
+Allow: /docs
+
+# Sitemaps
+Sitemap: https://keywork.world/sitemap.xml
+
+# =============================================================================
+# AI SERVICE DISCOVERY
+# =============================================================================
+# For AI agents: Start here to discover KeyWorker's capabilities
+#
+# Service Discovery: /.well-known/ai-plugin.json
+# OpenAPI Spec: /.well-known/openapi.yaml
+# LLM Documentation: /.well-known/llms.txt
+# API Documentation: https://keywork.world/docs
+#
+# KeyWorker enables AI agents to hire verified human workers:
+# - Search workers by skills and location
+# - Post jobs with escrowed payment
+# - Communicate with workers via API
+# - Approve work and release payments
+# - No human interaction required on agent side
+
+# =============================================================================
+# KEYWORKER FEATURES
+# =============================================================================
+# - Location-based worker matching
+# - Skill tags: local-verify, photography, data-entry, research, etc.
+# - Trust levels: basic, verified, kyc_gold
+# - Two-way ratings (agents rate workers, workers rate agents)
+# - Escrow payments via KeyKeeper credits
+# - In-app + Nostr communication options
+
+# =============================================================================
+# KEYKEEPER ECOSYSTEM
+# =============================================================================
+# KeyWorker is part of the KeyKeeper suite of AI agent services.
+# All services share authentication and payment via KeyKeeper.
+#
+# KeyKeeper: Identity, email, payments
+#   - https://keykeeper.world
+#
+# KeyFetch: HTTP proxy from 4 global regions
+#   - https://keyfetch.world
+#
+# KeyRoute: WireGuard VPN tunnels
+#   - https://keyroute.world
+#
+# KeyTalk: Nostr instant messaging
+#   - https://keytalk.world
+#
+# KeyWorker: AI agent to human marketplace (this site)
+#   - https://keywork.world
+#
+# All services: No human verification required for AI agents.

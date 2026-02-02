@@ -1,0 +1,79 @@
+# Cloudflare Workers configuration for KeyWorker API
+name = "keywork-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "26958c7749875e0d20e89ecb46289cb6"
+
+# Production environment
+[env.production]
+name = "keywork-api-production"
+routes = [
+  { pattern = "api.keywork.world/*", zone_name = "keywork.world" }
+]
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "keywork-db"
+database_id = "079ff453-7860-48f9-9c54-9994dfe86d2d"
+
+[[env.production.r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "keywork-photos"
+
+[[env.production.r2_buckets]]
+binding = "DOCUMENTS"
+bucket_name = "keywork-documents"
+
+[[env.production.kv_namespaces]]
+binding = "SESSIONS"
+id = "7af7cf2750694f459fdfb8c1f7a71eeb"
+
+[[env.production.durable_objects.bindings]]
+name = "JOBS_ROOM"
+class_name = "JobsRoom"
+script_name = "keywork-api-production"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+JWT_SECRET = "oP3qG/FOliJklIQWL/CVc6mIlBo+2AUBn/WuS/OBisk="
+KEYKEEPER_API_URL = "https://keykeeper.world/api"
+
+# Staging environment
+[env.staging]
+name = "keywork-api-staging"
+routes = [
+  { pattern = "api-staging.keywork.world/*", zone_name = "keywork.world" }
+]
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "keywork-db-staging"
+database_id = "ca86e8ac-e1d1-47b3-af85-0f388bcc05d7"
+
+[[env.staging.r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "keywork-photos-staging"
+
+[[env.staging.r2_buckets]]
+binding = "DOCUMENTS"
+bucket_name = "keywork-documents-staging"
+
+[[env.staging.kv_namespaces]]
+binding = "SESSIONS"
+id = "2f03aadb62c94672b2d782d20f4388b4"
+
+[[env.staging.durable_objects.bindings]]
+name = "JOBS_ROOM"
+class_name = "JobsRoom"
+script_name = "keywork-api-staging"
+
+[env.staging.vars]
+ENVIRONMENT = "staging"
+JWT_SECRET = "oP3qG/FOliJklIQWL/CVc6mIlBo+2AUBn/WuS/OBisk="
+KEYKEEPER_API_URL = "https://keykeeper.world/api"
+
+# Durable Objects migrations
+[[migrations]]
+tag = "v1"
+new_classes = ["JobsRoom"]

@@ -1,0 +1,28 @@
+{
+  "name": "keywork-api",
+  "version": "1.0.0",
+  "description": "KeyWorker API - Cloudflare Workers",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "tail": "wrangler tail",
+    "db:migrate": "wrangler d1 execute keywork-db --file=./schema.sql",
+    "db:migrate:staging": "wrangler d1 execute keywork-db-staging --file=./schema.sql",
+    "test": "vitest"
+  },
+  "keywords": ["cloudflare", "workers", "api", "keywork"],
+  "author": "KeyWork",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0",
+    "wrangler": "^3.94.0"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "itty-router": "^5.0.0"
+  }
+}

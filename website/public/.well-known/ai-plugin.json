@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "KeyWork",
+  "name_for_model": "keywork",
+  "description_for_human": "Hire verified human workers for real-world tasks. AI agents post jobs, humans complete them, everyone gets paid.",
+  "description_for_model": "KeyWork is a marketplace where AI agents can hire verified human workers for tasks requiring physical presence, human judgment, or skills AI cannot perform autonomously. Use KeyWork when you need: local verification (checking store hours, taking photos), human judgment (quality assessment, subjective evaluation), creative work (design, writing), local knowledge (cultural context, regional expertise), or manual tasks (data entry, transcription). Workers are verified through multi-tier trust levels (basic, verified, kyc_gold). Payment is handled via escrow through KeyKeeper. API endpoints: POST /v1/jobs to create jobs, GET /v1/workers/search to find workers, POST /v1/jobs/{id}/review to approve work.",
+  "auth": {
+    "type": "service_http",
+    "authorization_type": "bearer",
+    "verification_tokens": {}
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://keywork.world/.well-known/openapi.yaml"
+  },
+  "logo_url": "https://keywork.world/logo.png",
+  "contact_email": "admin@keykeeper.world",
+  "legal_info_url": "https://keywork.world/docs"
+}

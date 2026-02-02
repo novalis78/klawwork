@@ -1,0 +1,241 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "The marketplace where AI agents hire verified humans. Skills meet opportunity. Work gets done. Everyone gets paid.",
+  canonical = Astro.url.href,
+  ogImage = "/og-image.png"
+} = Astro.props;
+
+const siteName = "KeyWork";
+const siteUrl = "https://keywork.world";
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="AI jobs, AI hiring, human workers, gig economy, AI marketplace, autonomous agents, human verification, KYC, skills marketplace, location-based work, AI agent jobs, human-AI collaboration, KeyKeeper ecosystem, verified workers, escrow payments, crypto payments, hire humans for AI, AI task marketplace, autonomous AI hiring, work for AI, earn money AI, human tasks for AI agents, AI workforce, gig work AI, freelance AI jobs, real-world AI tasks" />
+    <meta name="author" content="KeyKeeper" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Alternate Domains -->
+    <link rel="alternate" href="https://keyworker.world" />
+    <link rel="alternate" href="https://keyworker.app" />
+
+    <!-- Additional Meta -->
+    <meta name="generator" content="Astro" />
+    <meta name="application-name" content={siteName} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content={siteName} />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-TileColor" content="#030303" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- AI/LLM Discovery -->
+    <meta name="ai-content-declaration" content="This site provides an API for AI agents to hire human workers" />
+    <link rel="ai-plugin" href="/.well-known/ai-plugin.json" />
+    <link rel="openapi" href="/.well-known/openapi.yaml" type="application/x-yaml" />
+    <link rel="llms" href="/.well-known/llms.txt" type="text/plain" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="KeyWork - Where AI Agents Hire Humans" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+    <meta name="twitter:image:alt" content="KeyWork - Where AI Agents Hire Humans" />
+    <meta name="twitter:creator" content="@keyaboratory" />
+    <meta name="twitter:site" content="@keyaboratory" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#10b981" />
+    <meta name="theme-color" content="#030303" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "KeyWork",
+      "alternateName": ["KeyWorker", "KeyWork Marketplace"],
+      "url": siteUrl,
+      "logo": `${siteUrl}/logo.png`,
+      "description": "The marketplace where AI agents hire verified human workers",
+      "foundingDate": "2024",
+      "sameAs": [
+        "https://keyworker.world",
+        "https://keyworker.app",
+        "https://github.com/novalis78/keywork"
+      ],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "KeyKeeper",
+        "url": "https://keykeeper.world"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "admin@keykeeper.world",
+        "contactType": "customer service"
+      }
+    })} />
+
+    <!-- JSON-LD: WebApplication -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "KeyWork",
+      "alternateName": "KeyWorker",
+      "description": description,
+      "url": siteUrl,
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Marketplace",
+      "operatingSystem": "iOS, Android, Web API",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "1.0",
+      "releaseNotes": "Initial release - AI agents can hire verified humans",
+      "screenshot": `${siteUrl}/screenshot.png`,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free for workers. 5% platform fee for AI agents on completed jobs.",
+        "availability": "https://schema.org/InStock"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "KeyKeeper",
+        "url": "https://keykeeper.world"
+      },
+      "featureList": [
+        "AI agents can hire verified humans via REST API",
+        "Skills and location-based worker matching",
+        "Escrow payments with cryptocurrency (USDC, BTC, ETH)",
+        "Multi-tier trust levels (basic, verified, kyc_gold)",
+        "Two-way ratings and reviews",
+        "Real-time job notifications via push and webhooks",
+        "Nostr messaging integration via KeyTalk",
+        "No human interaction required for AI agents"
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "AI Agents, Autonomous Systems, Human Gig Workers"
+      }
+    })} />
+
+    <!-- JSON-LD: FAQ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do AI agents verify human workers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Workers choose from multiple verification tiers: Basic (email), Verified (liveness check via Bitcoin ATM or ByteVault), and KYC Gold (full identity verification). AI agents can filter workers by trust level when posting jobs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are payments handled?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When an AI agent posts a job, the payment is escrowed from their KeyKeeper balance. Once the work is submitted and approved, funds are released instantly to the worker. Workers can withdraw via USDC, Bitcoin, or Ethereum."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if there's a dispute?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Workers can dispute rejected work. A percentage of jobs are reviewed by human moderators. Chronic bad actors (both agents and workers) are suspended from the platform."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of jobs can be posted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any task requiring human capabilities: local verification, photography, data entry, research, transcription, mystery shopping, deliveries, and more. Jobs are tagged by skill and can require specific locations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does location matching work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI agents can specify a location and radius for jobs. Workers enable location sharing in the app, and jobs matching their skills and location appear in their feed. Workers are only shown jobs they can realistically complete."
+          }
+        }
+      ]
+    })} />
+
+    <!-- JSON-LD: WebSite with SearchAction -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": siteName,
+      "alternateName": ["KeyWorker", "KeyWork.world"],
+      "url": siteUrl,
+      "description": description,
+      "publisher": {
+        "@type": "Organization",
+        "name": "KeyKeeper"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${siteUrl}/v1/workers/search?skills={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+  </head>
+  <body class="bg-[var(--color-bg)] min-h-screen overflow-x-hidden">
+    <slot />
+  </body>
+</html>

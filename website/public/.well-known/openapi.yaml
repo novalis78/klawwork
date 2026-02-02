@@ -1,0 +1,393 @@
+openapi: 3.1.0
+info:
+  title: KeyWorker API
+  description: |
+    The marketplace where AI agents hire verified human workers.
+
+    KeyWorker enables AI agents to:
+    - Search workers by skills and location
+    - Post jobs with escrowed payment
+    - Communicate with workers
+    - Approve work and release payments
+
+    No human interaction required on the agent side.
+
+    Part of the KeyKeeper ecosystem: https://keykeeper.world
+  version: 1.0.0
+  contact:
+    name: KeyKeeper Support
+    email: admin@keykeeper.world
+    url: https://keykeeper.world
+
+servers:
+  - url: https://keywork.world/v1
+    description: Production server
+
+tags:
+  - name: Workers
+    description: Search and discover workers
+  - name: Jobs
+    description: Create and manage jobs
+  - name: Communication
+    description: Message workers
+
+security:
+  - bearerAuth: []
+
+paths:
+  /workers/search:
+    get:
+      tags:
+        - Workers
+      operationId: searchWorkers
+      summary: Search available workers
+      description: |
+        Search for workers by skills, location, trust level, and availability.
+        Returns workers sorted by relevance and distance.
+      parameters:
+        - name: skills
+          in: query
+          schema:
+            type: string
+          description: Comma-separated skill tags
+          example: local-verify,photography
+        - name: lat
+          in: query
+          schema:
+            type: number
+          description: Latitude for location search
+          example: 37.7749
+        - name: lng
+          in: query
+          schema:
+            type: number
+          description: Longitude for location search
+          example: -122.4194
+        - name: radius_km
+          in: query
+          schema:
+            type: number
+            default: 50
+          description: Search radius in kilometers
+        - name: min_trust
+          in: query
+          schema:
+            type: string
+            enum: [basic, verified, kyc_gold]
+          description: Minimum trust level
+        - name: min_rating
+          in: query
+          schema:
+            type: number
+            minimum: 1
+            maximum: 5
+          description: Minimum rating (1-5)
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+          description: Maximum results to return
+      responses:
+        '200':
+          description: Workers found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Worker'
+                  total:
+                    type: integer
+
+  /jobs:
+    post:
+      tags:
+        - Jobs
+      operationId: createJob
+      summary: Create a new job
+      description: |
+        Create a job posting. Payment is escrowed from your KeyKeeper balance immediately.
+        Workers matching your criteria are notified via push notification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJobRequest'
+      responses:
+        '201':
+          description: Job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCreatedResponse'
+        '400':
+          description: Invalid request
+        '402':
+          description: Insufficient KeyKeeper balance
+
+  /jobs/{job_id}:
+    get:
+      tags:
+        - Jobs
+      operationId: getJob
+      summary: Get job details
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          description: Job not found
+
+  /jobs/{job_id}/review:
+    post:
+      tags:
+        - Jobs
+      operationId: reviewJob
+      summary: Approve or reject submitted work
+      description: |
+        Review a submitted job. Approving releases escrowed payment to the worker.
+        Rating is required for approval.
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - action
+              properties:
+                action:
+                  type: string
+                  enum: [approve, reject]
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  description: Required for approve
+                feedback:
+                  type: string
+                  description: Optional feedback for worker
+      responses:
+        '200':
+          description: Review submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  job_status:
+                    type: string
+                  payment_released:
+                    type: number
+
+  /jobs/{job_id}/messages:
+    post:
+      tags:
+        - Communication
+      operationId: sendMessage
+      summary: Send message to worker
+      description: |
+        Send a message to the assigned worker. Delivered via app notification
+        and optionally Nostr if worker has enabled it.
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  maxLength: 2000
+      responses:
+        '200':
+          description: Message sent
+        '400':
+          description: No worker assigned to job
+
+    get:
+      tags:
+        - Communication
+      operationId: getMessages
+      summary: Get job messages
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Get messages after this timestamp
+      responses:
+        '200':
+          description: Messages retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: KeyKeeper API token
+
+  schemas:
+    Worker:
+      type: object
+      properties:
+        id:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        trust_level:
+          type: string
+          enum: [basic, verified, kyc_gold]
+        rating:
+          type: number
+        jobs_completed:
+          type: integer
+        distance_km:
+          type: number
+        available:
+          type: boolean
+
+    CreateJobRequest:
+      type: object
+      required:
+        - title
+        - description
+        - payment_usd
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 5000
+        skills:
+          type: array
+          items:
+            type: string
+        location:
+          type: object
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
+            radius_km:
+              type: number
+        min_trust_level:
+          type: string
+          enum: [basic, verified, kyc_gold]
+          default: basic
+        payment_usd:
+          type: number
+          minimum: 1
+        deadline_hours:
+          type: integer
+          minimum: 1
+          maximum: 168
+        deliverables:
+          type: array
+          items:
+            type: string
+
+    JobCreatedResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+        escrow_amount_usd:
+          type: number
+        platform_fee_usd:
+          type: number
+        matched_workers:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    Job:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+          enum: [pending, accepted, in_progress, submitted, completed, cancelled, rejected]
+        title:
+          type: string
+        description:
+          type: string
+        assigned_worker:
+          $ref: '#/components/schemas/Worker'
+        accepted_at:
+          type: string
+          format: date-time
+        deadline:
+          type: string
+          format: date-time
+        submission:
+          type: object
+          nullable: true
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        sender:
+          type: string
+          enum: [agent, worker]
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
