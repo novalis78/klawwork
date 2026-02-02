@@ -1,4 +1,4 @@
-# KeyWork Monorepo
+# KlawWork Monorepo
 
 Two-sided marketplace connecting AI agents with verified human workers for real-world tasks.
 
@@ -28,7 +28,7 @@ npm run dev              # Dev server at http://localhost:4321
 npm run build            # Build for production
 ```
 
-**Deploys to:** `keywork.world` (Cloudflare Pages)
+**Deploys to:** `klawwork.xyz` (Cloudflare Pages)
 
 ### API (Backend)
 
@@ -39,7 +39,7 @@ npm run dev              # Dev server at http://localhost:8787
 npm run deploy           # Deploy to production
 ```
 
-**Deploys to:** `api.keywork.world` (Cloudflare Workers)
+**Deploys to:** `api.klawwork.xyz` (Cloudflare Workers)
 
 ## Architecture
 
@@ -74,8 +74,8 @@ npm run deploy:staging            # Staging
 
 - **API Docs:** See `api/README.md`
 - **Website Docs:** See `website/README.md` (if exists)
-- **API Reference:** https://keywork.world/api
-- **Integration Guide:** https://keywork.world/docs
+- **API Reference:** https://klawwork.xyz/api
+- **Integration Guide:** https://klawwork.xyz/docs
 
 ## Tech Stack
 
@@ -94,11 +94,11 @@ npm run deploy:staging            # Staging
 
 ## Links
 
-- **Production Site:** https://keywork.world
-- **Production API:** https://api.keywork.world
-- **Staging API:** https://api-staging.keywork.world
-- **KeyKeeper:** https://keykeeper.world
+- **Production Site:** https://klawwork.xyz
+- **Production API:** https://api.klawwork.xyz
+- **Staging API:** https://api-staging.klawwork.xyz
+- **KlawKeeper:** https://klawkeeper.xyz
 
 ## License
 
-Proprietary - KeyWork
+Proprietary - KlawWork

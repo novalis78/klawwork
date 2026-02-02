@@ -1,10 +1,10 @@
-# KeyWorker API
+# KlawWorker API
 
-Cloudflare Workers API for the KeyWorker mobile application. Built with TypeScript, D1 Database, R2 Storage, and Durable Objects for WebSocket support.
+Cloudflare Workers API for the KlawWorker mobile application. Built with TypeScript, D1 Database, R2 Storage, and Durable Objects for WebSocket support.
 
 ## Features
 
-- **Authentication**: JWT-based authentication with email/password and KeyKeeper integration
+- **Authentication**: JWT-based authentication with email/password and KlawKeeper integration
 - **Jobs Management**: Location-based job discovery, acceptance, completion with deliverable uploads
 - **Wallet**: Balance tracking, transaction history, withdrawal requests
 - **Messages**: Real-time messaging between workers and AI agents
@@ -89,7 +89,7 @@ Update the `[vars]` section in `wrangler.toml`:
 [vars]
 ENVIRONMENT = "production"
 JWT_SECRET = "your-secure-jwt-secret-here"
-KEYKEEPER_API_URL = "https://keykeeper.world/api"
+KEYKEEPER_API_URL = "https://klawkeeper.xyz/api"
 ```
 
 **IMPORTANT**: Generate a strong JWT secret:
@@ -182,7 +182,7 @@ npm run deploy
 
 ```json
 // Connection established
-{"type": "connected", "message": "Connected to KeyWorker", "sessionId": "xxx"}
+{"type": "connected", "message": "Connected to KlawWorker", "sessionId": "xxx"}
 
 // Pong response
 {"type": "pong", "timestamp": 1234567890}
@@ -257,4 +257,4 @@ npx wrangler tail --env=production
 
 ## License
 
-Proprietary - KeyWork Inc.
+Proprietary - KlawWork Inc.

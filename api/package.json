@@ -1,7 +1,7 @@
 {
   "name": "keywork-api",
   "version": "1.0.0",
-  "description": "KeyWorker API - Cloudflare Workers",
+  "description": "KlawWorker API - Cloudflare Workers",
   "main": "src/index.ts",
   "scripts": {
     "dev": "wrangler dev",
@@ -13,7 +13,7 @@
     "test": "vitest"
   },
   "keywords": ["cloudflare", "workers", "api", "keywork"],
-  "author": "KeyWork",
+  "author": "KlawWork",
   "license": "MIT",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",

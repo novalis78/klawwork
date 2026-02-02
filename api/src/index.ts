@@ -1,5 +1,5 @@
 /**
- * KeyWorker API - Cloudflare Workers
+ * KlawWorker API - Cloudflare Workers
  * Main entry point and router
  */
 

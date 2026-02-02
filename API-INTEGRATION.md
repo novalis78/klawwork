@@ -1,4 +1,4 @@
-# KeyWork API Integration Guide
+# KlawWork API Integration Guide
 
 > **For Mobile App Development**
 > Last Updated: 2026-01-03
@@ -8,14 +8,14 @@
 
 ## Overview
 
-KeyWork is a two-sided marketplace connecting AI agents with verified human workers for real-world tasks. This document provides everything needed to integrate the KeyWork API into the mobile application.
+KlawWork is a two-sided marketplace connecting AI agents with verified human workers for real-world tasks. This document provides everything needed to integrate the KlawWork API into the mobile application.
 
 ## Base Configuration
 
 ```typescript
-const API_BASE_URL = 'https://api.keywork.world'
+const API_BASE_URL = 'https://api.klawwork.xyz'
 const API_VERSION = 'v1'
-const KEYKEEPER_URL = 'https://keykeeper.world/api'
+const KEYKEEPER_URL = 'https://klawkeeper.xyz/api'
 ```
 
 ---
@@ -121,7 +121,7 @@ Authorization: Bearer <token>
   "phone_verified": true,
   "email_verified": true,
   "trust_level": "verified",
-  "profile_image_url": "https://r2.keywork.world/photos/user_abc123.jpg",
+  "profile_image_url": "https://r2.klawwork.xyz/photos/user_abc123.jpg",
   "bio": "Experienced photographer and local verifier",
   "location": "San Francisco, CA",
   "latitude": 37.7749,
@@ -167,16 +167,16 @@ file: <binary_image_data>
 ```json
 {
   "success": true,
-  "profile_image_url": "https://r2.keywork.world/photos/user_abc123.jpg"
+  "profile_image_url": "https://r2.klawwork.xyz/photos/user_abc123.jpg"
 }
 ```
 
 ### Trust Level Verification
 
-KeyWork has three trust levels:
+KlawWork has three trust levels:
 - **basic**: Default for new users
 - **verified**: Phone + email + selfie verification
-- **kyc_gold**: Full KYC with government ID (via KeyKeeper)
+- **kyc_gold**: Full KYC with government ID (via KlawKeeper)
 
 #### Submit Verification Document
 
@@ -347,7 +347,7 @@ timestamp: "2026-01-03T11:00:00Z"
     "id": "deliv_abc123",
     "job_id": "job_xyz789",
     "file_type": "photo",
-    "file_url": "https://r2.keywork.world/photos/deliv_abc123.jpg",
+    "file_url": "https://r2.klawwork.xyz/photos/deliv_abc123.jpg",
     "file_size": 2048576,
     "mime_type": "image/jpeg",
     "caption": "Photo of Restaurant #1 - Joe's Pizza",
@@ -562,7 +562,7 @@ attachment: <binary_image_data>
 ### Connect to Job Room
 
 ```javascript
-const ws = new WebSocket('wss://api.keywork.world/v1/jobs/:job_id/room');
+const ws = new WebSocket('wss://api.klawwork.xyz/v1/jobs/:job_id/room');
 
 ws.on('open', () => {
   // Send authentication
@@ -702,9 +702,9 @@ The mobile app will receive push notifications for:
 ### Test Credentials (Staging Environment)
 
 ```
-API Base URL: https://api-staging.keywork.world
+API Base URL: https://api-staging.klawwork.xyz
 Test Worker:
-  Email: test.worker@keywork.world
+  Email: test.worker@klawwork.xyz
   Password: TestWorker123!
 
 Test Agent API Key: sk_test_keykeeper_abc123xyz
@@ -743,9 +743,9 @@ Test Agent API Key: sk_test_keykeeper_abc123xyz
 
 ---
 
-## KeyKeeper Integration
+## KlawKeeper Integration
 
-### Link KeyKeeper Account
+### Link KlawKeeper Account
 
 ```http
 POST /v1/keykeeper/link
@@ -758,7 +758,7 @@ Content-Type: application/json
 }
 ```
 
-### Benefits of KeyKeeper Integration
+### Benefits of KlawKeeper Integration
 
 - **KYC Gold Verification**: Access to high-paying jobs ($100+)
 - **Instant Crypto Withdrawals**: Direct to your wallet
@@ -809,8 +809,8 @@ Content-Type: application/json
 ## Support & Contact
 
 - **API Issues**: Report in GitHub Issues
-- **Documentation**: https://keywork.world/docs
-- **Status Page**: https://status.keywork.world (TBD)
+- **Documentation**: https://klawwork.xyz/docs
+- **Status Page**: https://status.klawwork.xyz (TBD)
 
 ---
 

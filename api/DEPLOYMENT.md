@@ -1,6 +1,6 @@
-# KeyWorker API Deployment Guide
+# KlawWorker API Deployment Guide
 
-This guide walks you through deploying the KeyWorker API to Cloudflare Workers.
+This guide walks you through deploying the KlawWorker API to Cloudflare Workers.
 
 ## Prerequisites
 
@@ -104,7 +104,7 @@ Update the `[vars]` section in `wrangler.toml`:
 [vars]
 ENVIRONMENT = "production"
 JWT_SECRET = "paste-your-generated-secret-here"
-KEYKEEPER_API_URL = "https://keykeeper.world/api"
+KEYKEEPER_API_URL = "https://klawkeeper.xyz/api"
 ```
 
 **Security Note**: Never commit real JWT secrets to version control. Consider using Wrangler secrets for production:
@@ -134,7 +134,7 @@ Wait for the deployment to complete. You should see output like:
 Test the health endpoint:
 
 ```bash
-curl https://api-staging.keywork.world/health
+curl https://api-staging.klawwork.xyz/health
 ```
 
 Expected response:
@@ -149,7 +149,7 @@ Expected response:
 Test user registration:
 
 ```bash
-curl -X POST https://api-staging.keywork.world/auth/register \
+curl -X POST https://api-staging.klawwork.xyz/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
@@ -170,12 +170,12 @@ npm run deploy
 
 In your Cloudflare dashboard:
 
-1. Go to your domain `keywork.world`
+1. Go to your domain `klawwork.xyz`
 2. Click **DNS** > **Records**
 3. The Worker routes should already be configured via `wrangler.toml`
-4. Verify `api.keywork.world` resolves correctly:
+4. Verify `api.klawwork.xyz` resolves correctly:
    ```bash
-   curl https://api.keywork.world/health
+   curl https://api.klawwork.xyz/health
    ```
 
 ## Step 11: Update Mobile App
@@ -186,9 +186,9 @@ Update the mobile app's API configuration:
 
 ```javascript
 const API_CONFIG = {
-  PRODUCTION: 'https://api.keywork.world',
-  DEVELOPMENT: 'https://api-staging.keywork.world',
-  FALLBACK: 'https://api.keywork.world'
+  PRODUCTION: 'https://api.klawwork.xyz',
+  DEVELOPMENT: 'https://api-staging.klawwork.xyz',
+  FALLBACK: 'https://api.klawwork.xyz'
 };
 ```
 
@@ -288,7 +288,7 @@ Cloudflare Workers pricing (as of 2024):
 - **R2**: $0.015/GB/month storage + $0.36/million reads
 - **KV**: $0.50/million reads
 
-Expected monthly costs for KeyWorker (1000 active users):
+Expected monthly costs for KlawWorker (1000 active users):
 - Workers: ~$5
 - D1: ~$5
 - R2: ~$2
@@ -319,4 +319,4 @@ Before going to production:
 4. Add Sentry or similar error tracking
 5. Set up CI/CD pipeline for automated deployments
 6. Create admin dashboard for job management
-7. Implement KeyKeeper wallet integration
+7. Implement KlawKeeper wallet integration
