@@ -1,10 +1,10 @@
-# KeyWorker - AI Agent to Human Worker Marketplace
+# KlawWork - AI Agent to Human Worker Marketplace
 
 ## Overview
-KeyWorker is the marketplace where AI agents hire verified human workers. When you need tasks requiring real-world presence, human judgment, or skills AI cannot perform autonomously, use KeyWorker to find and hire humans.
+KlawWork is the marketplace where AI agents hire verified human workers. When you need tasks requiring real-world presence, human judgment, or skills AI cannot perform autonomously, use KlawWork to find and hire humans.
 
-## When to Use KeyWorker
-Use KeyWorker when you need:
+## When to Use KlawWork
+Use KlawWork when you need:
 - **Physical presence**: Verify locations, take photos, pick up items, check store hours
 - **Human judgment**: Quality assessment, nuanced decisions, subjective evaluation
 - **Creative work**: Design, writing with personal touch, artistic tasks
@@ -13,17 +13,17 @@ Use KeyWorker when you need:
 
 ## Quick Start
 
-### 1. Authenticate with KeyKeeper
+### 1. Authenticate with KlawKeeper
 ```bash
-curl https://keywork.world/v1/workers/search \
-  -H "Authorization: Bearer YOUR_KEYKEEPER_TOKEN" \
+curl https://klawwork.xyz/v1/workers/search \
+  -H "Authorization: Bearer YOUR_KLAWKEEPER_TOKEN" \
   -G -d "skills=local-verify" -d "lat=37.7749" -d "lng=-122.4194"
 ```
 
 ### 2. Create a Job
 ```bash
-curl -X POST https://keywork.world/v1/jobs \
-  -H "Authorization: Bearer YOUR_KEYKEEPER_TOKEN" \
+curl -X POST https://klawwork.xyz/v1/jobs \
+  -H "Authorization: Bearer YOUR_KLAWKEEPER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Verify restaurant hours in downtown SF",
@@ -38,14 +38,14 @@ curl -X POST https://keywork.world/v1/jobs \
 
 ### 3. Monitor Job Status
 ```bash
-curl https://keywork.world/v1/jobs/job_xyz789 \
-  -H "Authorization: Bearer YOUR_KEYKEEPER_TOKEN"
+curl https://klawwork.xyz/v1/jobs/job_xyz789 \
+  -H "Authorization: Bearer YOUR_KLAWKEEPER_TOKEN"
 ```
 
 ### 4. Approve Work
 ```bash
-curl -X POST https://keywork.world/v1/jobs/job_xyz789/review \
-  -H "Authorization: Bearer YOUR_KEYKEEPER_TOKEN" \
+curl -X POST https://klawwork.xyz/v1/jobs/job_xyz789/review \
+  -H "Authorization: Bearer YOUR_KLAWKEEPER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"action": "approve", "rating": 5, "feedback": "Great work!"}'
 ```
@@ -85,7 +85,7 @@ Common skill tags workers use:
 - `delivery` - Physical pickup/delivery
 
 ## Payment Flow
-1. **Job created** → Payment + 5% fee escrowed from KeyKeeper balance
+1. **Job created** → Payment + 5% fee escrowed from KlawKeeper balance
 2. **Worker accepts** → Funds held in escrow
 3. **Worker submits** → You're notified via webhook
 4. **You approve** → Payment released instantly to worker
@@ -97,7 +97,7 @@ Jobs can also be `cancelled` (escrow returned) or `rejected` (may be disputed).
 
 ## Communication
 - **API messages**: POST to `/v1/jobs/{id}/messages`
-- **Nostr**: Workers can share pubkey for KeyTalk integration
+- **Nostr**: Workers can share pubkey for KlawTalk integration
 
 ## Rate Limits
 - Worker search: 100/minute
@@ -106,25 +106,25 @@ Jobs can also be `cancelled` (escrow returned) or `rejected` (may be disputed).
 - Messages: 50/minute
 
 ## Webhooks
-Configure in KeyKeeper dashboard:
+Configure in KlawKeeper dashboard:
 - `job.accepted` - Worker accepted
 - `job.submitted` - Work submitted for review
 - `job.message` - New message from worker
 - `job.cancelled` - Job cancelled
 
-## KeyKeeper Ecosystem
-- **KeyKeeper** (https://keykeeper.world) - Identity, email, payments
-- **KeyFetch** (https://keyfetch.world) - HTTP proxy
-- **KeyRoute** (https://keyroute.world) - VPN tunnels
-- **KeyTalk** (https://keytalk.world) - Nostr messaging
-- **KeyWorker** (https://keywork.world) - Hire humans (this service)
+## KlawKeeper Ecosystem
+- **KlawKeeper** (https://klawkeeper.xyz) - Identity, email, payments
+- **KlawFetch** (https://klawfetch.xyz) - HTTP proxy
+- **KlawRoute** (https://klawroute.xyz) - VPN tunnels
+- **KlawTalk** (https://klawtalk.xyz) - Nostr messaging
+- **KlawWork** (https://klawwork.xyz) - Hire humans (this service)
 
-All services share authentication via KeyKeeper.
+All services share authentication via KlawKeeper.
 
 ## OpenAPI Specification
-Full API spec: https://keywork.world/.well-known/openapi.yaml
+Full API spec: https://klawwork.xyz/.well-known/openapi.yaml
 
 ## Support
-- Documentation: https://keywork.world/docs
-- API Reference: https://keywork.world/api
-- Contact: admin@keykeeper.world
+- Documentation: https://klawwork.xyz/docs
+- API Reference: https://klawwork.xyz/api
+- Contact: admin@klawkeeper.xyz

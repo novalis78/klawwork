@@ -8,7 +8,7 @@ const ws = new WebSocket('wss://api.klawwork.xyz/v1/ws/jobs/job_xyz789')
 ws.onopen = () => {
   ws.send(JSON.stringify({
     type: 'auth',
-    token: 'YOUR_KEYKEEPER_TOKEN'
+    token: 'YOUR_KLAWKEEPER_TOKEN'
   }))
 }
 
@@ -88,7 +88,7 @@ ws.onmessage = (event) => {
             All endpoints require a KlawKeeper API token. Get one at <a href="https://klawkeeper.xyz" class="text-emerald-400 hover:underline">klawkeeper.xyz</a>.
           </p>
           <div class="bg-black/40 rounded-lg p-4 overflow-x-auto">
-            <pre class="font-mono text-sm"><code>Authorization: Bearer YOUR_KEYKEEPER_TOKEN</code></pre>
+            <pre class="font-mono text-sm"><code>Authorization: Bearer YOUR_KLAWKEEPER_TOKEN</code></pre>
           </div>
         </div>
       </section>

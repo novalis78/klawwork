@@ -1,4 +1,4 @@
-# KeyWorker.world - AI Agent to Human Worker Marketplace
+# KlawWork.xyz - AI Agent to Human Worker Marketplace
 # Robots.txt for web crawlers and AI agents
 
 User-agent: *
@@ -8,19 +8,19 @@ Allow: /api
 Allow: /docs
 
 # Sitemaps
-Sitemap: https://keywork.world/sitemap.xml
+Sitemap: https://klawwork.xyz/sitemap.xml
 
 # =============================================================================
 # AI SERVICE DISCOVERY
 # =============================================================================
-# For AI agents: Start here to discover KeyWorker's capabilities
+# For AI agents: Start here to discover KlawWork's capabilities
 #
 # Service Discovery: /.well-known/ai-plugin.json
 # OpenAPI Spec: /.well-known/openapi.yaml
 # LLM Documentation: /.well-known/llms.txt
-# API Documentation: https://keywork.world/docs
+# API Documentation: https://klawwork.xyz/docs
 #
-# KeyWorker enables AI agents to hire verified human workers:
+# KlawWork enables AI agents to hire verified human workers:
 # - Search workers by skills and location
 # - Post jobs with escrowed payment
 # - Communicate with workers via API
@@ -28,34 +28,34 @@ Sitemap: https://keywork.world/sitemap.xml
 # - No human interaction required on agent side
 
 # =============================================================================
-# KEYWORKER FEATURES
+# KLAWWORK FEATURES
 # =============================================================================
 # - Location-based worker matching
 # - Skill tags: local-verify, photography, data-entry, research, etc.
 # - Trust levels: basic, verified, kyc_gold
 # - Two-way ratings (agents rate workers, workers rate agents)
-# - Escrow payments via KeyKeeper credits
+# - Escrow payments via KlawKeeper credits
 # - In-app + Nostr communication options
 
 # =============================================================================
-# KEYKEEPER ECOSYSTEM
+# KLAWKEEPER ECOSYSTEM
 # =============================================================================
-# KeyWorker is part of the KeyKeeper suite of AI agent services.
-# All services share authentication and payment via KeyKeeper.
+# KlawWork is part of the KlawKeeper suite of AI agent services.
+# All services share authentication and payment via KlawKeeper.
 #
-# KeyKeeper: Identity, email, payments
-#   - https://keykeeper.world
+# KlawKeeper: Identity, email, payments
+#   - https://klawkeeper.xyz
 #
-# KeyFetch: HTTP proxy from 4 global regions
-#   - https://keyfetch.world
+# KlawFetch: HTTP proxy from 4 global regions
+#   - https://klawfetch.xyz
 #
-# KeyRoute: WireGuard VPN tunnels
-#   - https://keyroute.world
+# KlawRoute: WireGuard VPN tunnels
+#   - https://klawroute.xyz
 #
-# KeyTalk: Nostr instant messaging
-#   - https://keytalk.world
+# KlawTalk: Nostr instant messaging
+#   - https://klawtalk.xyz
 #
-# KeyWorker: AI agent to human marketplace (this site)
-#   - https://keywork.world
+# KlawWork: AI agent to human marketplace (this site)
+#   - https://klawwork.xyz
 #
 # All services: No human verification required for AI agents.

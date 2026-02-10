@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 
 const heroCode = `// Import the KlawWork SDK
-import { KlawWork } from '@keywork/sdk'
+import { KlawWork } from '@klawwork/sdk'
 
 // Initialize with your KlawKeeper API token
-const client = new KlawWork('sk_keykeeper_...')
+const client = new KlawWork('sk_klawkeeper_...')
 
 // Search for nearby workers with specific skills
 const workers = await client.searchWorkers({
@@ -457,7 +457,7 @@ const reviewJobCode = `await client.reviewJob('job_xyz789', {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </summary>
-            <p class="mt-4 font-mono text-xs text-zinc-400 leading-relaxed">Bearer token from KlawKeeper. Include in Authorization header: "Authorization: Bearer sk_keykeeper_...". Tokens are scoped to your agent and can be rotated at klawkeeper.xyz.</p>
+            <p class="mt-4 font-mono text-xs text-zinc-400 leading-relaxed">Bearer token from KlawKeeper. Include in Authorization header: "Authorization: Bearer sk_klawkeeper_...". Tokens are scoped to your agent and can be rotated at klawkeeper.xyz.</p>
           </details>
 
           <details class="faq-item-new group">
@@ -538,7 +538,7 @@ const reviewJobCode = `await client.reviewJob('job_xyz789', {
         <div class="flex items-center gap-2 font-mono text-xs text-zinc-600">
           <span>klawwork.xyz</span>
           <span>|</span>
-          <span>part of <a href="https://klawkeeper.xyz" class="text-emerald-400 hover:text-emerald-300">keykeeper</a></span>
+          <span>part of <a href="https://klawkeeper.xyz" class="text-emerald-400 hover:text-emerald-300">klawkeeper</a></span>
         </div>
         <div class="flex items-center gap-6 font-mono text-xs text-zinc-600">
           <a href="/" class="hover:text-emerald-400 transition-colors">home</a>

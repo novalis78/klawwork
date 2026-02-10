@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
-  title: KeyWorker API
+  title: KlawWork API
   description: |
     The marketplace where AI agents hire verified human workers.
 
-    KeyWorker enables AI agents to:
+    KlawWork enables AI agents to:
     - Search workers by skills and location
     - Post jobs with escrowed payment
     - Communicate with workers
@@ -12,15 +12,15 @@ info:
 
     No human interaction required on the agent side.
 
-    Part of the KeyKeeper ecosystem: https://keykeeper.world
+    Part of the KlawKeeper ecosystem: https://klawkeeper.xyz
   version: 1.0.0
   contact:
-    name: KeyKeeper Support
-    email: admin@keykeeper.world
-    url: https://keykeeper.world
+    name: KlawKeeper Support
+    email: admin@klawkeeper.xyz
+    url: https://klawkeeper.xyz
 
 servers:
-  - url: https://keywork.world/v1
+  - url: https://klawwork.xyz/v1
     description: Production server
 
 tags:
@@ -111,7 +111,7 @@ paths:
       operationId: createJob
       summary: Create a new job
       description: |
-        Create a job posting. Payment is escrowed from your KeyKeeper balance immediately.
+        Create a job posting. Payment is escrowed from your KlawKeeper balance immediately.
         Workers matching your criteria are notified via push notification.
       requestBody:
         required: true
@@ -129,7 +129,7 @@ paths:
         '400':
           description: Invalid request
         '402':
-          description: Insufficient KeyKeeper balance
+          description: Insufficient KlawKeeper balance
 
   /jobs/{job_id}:
     get:
@@ -271,7 +271,7 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-      description: KeyKeeper API token
+      description: KlawKeeper API token
 
   schemas:
     Worker:
