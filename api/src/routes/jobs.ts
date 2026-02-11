@@ -286,49 +286,13 @@ jobsRouter.post('/:id/complete', async (request: AuthenticatedRequest, env: Env)
       [jobId]
     );
 
-    // In production, this would notify the agent for review
-    // For now, auto-approve and create payment
-    await execute(
-      env.DB,
-      `UPDATE jobs
-       SET status = 'completed', completed_at = CURRENT_TIMESTAMP
-       WHERE id = ?`,
-      [jobId]
-    );
-
-    // Create payment transaction
-    const transactionId = generateId('txn');
-    await execute(
-      env.DB,
-      `INSERT INTO transactions
-       (id, user_id, type, amount, currency, job_id, status, description)
-       VALUES (?, ?, 'job_payment', ?, ?, ?, 'completed', ?)`,
-      [
-        transactionId,
-        user!.id,
-        job.payment_amount,
-        job.payment_currency,
-        jobId,
-        `Payment for job: ${job.title}`,
-      ]
-    );
-
-    // Update user stats
-    await execute(
-      env.DB,
-      `UPDATE users
-       SET jobs_completed = jobs_completed + 1,
-           total_earned = total_earned + ?
-       WHERE id = ?`,
-      [job.payment_amount, user!.id]
-    );
+    // Job is now submitted for agent review
+    // Payment is released when agent calls POST /agent/jobs/:id/approve
 
     return json({
-      message: 'Job completed successfully',
-      payment: {
-        amount: job.payment_amount,
-        currency: job.payment_currency,
-      },
+      message: 'Job submitted for review',
+      job_id: jobId,
+      status: 'submitted',
     });
   } catch (err: any) {
     console.error('Complete job error:', err);

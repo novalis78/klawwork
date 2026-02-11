@@ -9,7 +9,9 @@ import { jobsRouter } from './routes/jobs';
 import { walletRouter } from './routes/wallet';
 import { messagesRouter } from './routes/messages';
 import { verificationRouter } from './routes/verification';
+import { agentRouter } from './routes/agent';
 import { authMiddleware } from './middleware/auth';
+import { agentAuthMiddleware } from './middleware/agentAuth';
 import { corsHeaders } from './utils/cors';
 
 // Environment bindings type
@@ -45,6 +47,9 @@ router.all('/jobs/*', authMiddleware, jobsRouter.fetch);
 router.all('/wallet/*', authMiddleware, walletRouter.fetch);
 router.all('/messages/*', authMiddleware, messagesRouter.fetch);
 router.all('/verification/*', authMiddleware, verificationRouter.fetch);
+
+// Agent routes (KlawKeeper API key auth)
+router.all('/agent/*', agentAuthMiddleware, agentRouter.fetch);
 
 // WebSocket upgrade for real-time messaging
 router.get('/ws', async (request, env: Env) => {
