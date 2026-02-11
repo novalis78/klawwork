@@ -55,7 +55,7 @@ export class JobsRoom extends DurableObject {
     server.send(
       JSON.stringify({
         type: 'connected',
-        message: 'Connected to KlawWorker real-time updates',
+        message: 'Connected to KeyWorker real-time updates',
         sessionId,
       })
     );

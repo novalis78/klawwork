@@ -68,7 +68,6 @@ authRouter.post('/register', async (request: Request, env: Env) => {
     );
 
     return json({
-      success: true,
       message: 'Registration successful',
       token,
       user: {
@@ -134,7 +133,6 @@ authRouter.post('/login', async (request: Request, env: Env) => {
     );
 
     return json({
-      success: true,
       message: 'Login successful',
       token,
       user: {
@@ -178,7 +176,7 @@ authRouter.get('/me', async (request: any, env: Env) => {
       return error(404, 'User not found');
     }
 
-    return json({ success: true, user: profile });
+    return json({ user: profile });
   } catch (err: any) {
     console.error('Me error:', err);
     return error(500, err.message || 'Failed to fetch user');
@@ -205,7 +203,6 @@ authRouter.post('/password/request-reset', async (request: Request, env: Env) =>
     // Always return success to prevent email enumeration
     // In production, you would send an email here if user exists
     return json({
-      success: true,
       message: 'If your email is in our system, you will receive a password reset code'
     });
   } catch (err: any) {
@@ -237,7 +234,7 @@ authRouter.post('/logout', async (request: any, env: Env) => {
       );
     }
 
-    return json({ success: true, message: 'Logged out successfully' });
+    return json({ message: 'Logged out successfully' });
   } catch (err: any) {
     console.error('Logout error:', err);
     return error(500, 'Failed to logout');
