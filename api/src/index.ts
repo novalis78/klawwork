@@ -1,5 +1,5 @@
 /**
- * KlawWorker API - Cloudflare Workers
+ * KeyWorker API - Cloudflare Workers
  * Main entry point and router
  */
 
@@ -10,8 +10,10 @@ import { walletRouter } from './routes/wallet';
 import { messagesRouter } from './routes/messages';
 import { verificationRouter } from './routes/verification';
 import { agentRouter } from './routes/agent';
+import { workersRouter } from './routes/workers';
 import { authMiddleware } from './middleware/auth';
 import { agentAuthMiddleware } from './middleware/agentAuth';
+import { rateLimitMiddleware } from './middleware/rateLimit';
 import { corsHeaders } from './utils/cors';
 
 // Environment bindings type
@@ -36,20 +38,30 @@ router.options('*', () => new Response(null, { headers: corsHeaders }));
 router.get('/health', () => json({
   status: 'healthy',
   service: 'keywork-api',
+  version: '2.0.0',
   timestamp: new Date().toISOString()
 }));
 
-// Public routes (no auth required)
-router.all('/auth/*', authRouter.fetch);
+// Public auth routes (no auth required)
+router.post('/auth/register', authRouter.fetch);
+router.post('/auth/login', authRouter.fetch);
+router.post('/auth/password/*', authRouter.fetch);
 
-// Protected routes (auth required)
-router.all('/jobs/*', authMiddleware, jobsRouter.fetch);
-router.all('/wallet/*', authMiddleware, walletRouter.fetch);
-router.all('/messages/*', authMiddleware, messagesRouter.fetch);
-router.all('/verification/*', authMiddleware, verificationRouter.fetch);
+// Protected auth routes (auth required)
+router.get('/auth/me', authMiddleware, authRouter.fetch);
+router.post('/auth/logout', authMiddleware, authRouter.fetch);
 
-// Agent routes (KlawKeeper API key auth)
-router.all('/agent/*', agentAuthMiddleware, agentRouter.fetch);
+// Protected worker routes (JWT auth + rate limiting)
+router.all('/jobs/*', authMiddleware, rateLimitMiddleware, jobsRouter.fetch);
+router.all('/wallet/*', authMiddleware, rateLimitMiddleware, walletRouter.fetch);
+router.all('/messages/*', authMiddleware, rateLimitMiddleware, messagesRouter.fetch);
+router.all('/verification/*', authMiddleware, rateLimitMiddleware, verificationRouter.fetch);
+
+// Agent routes (KlawKeeper API key auth + rate limiting)
+router.all('/agent/*', agentAuthMiddleware, rateLimitMiddleware, agentRouter.fetch);
+
+// Worker search (agent-facing, KlawKeeper auth + rate limiting)
+router.all('/workers/*', agentAuthMiddleware, rateLimitMiddleware, workersRouter.fetch);
 
 // WebSocket upgrade for real-time messaging
 router.get('/ws', async (request, env: Env) => {
@@ -58,8 +70,10 @@ router.get('/ws', async (request, env: Env) => {
     return error(426, 'Expected WebSocket upgrade');
   }
 
-  // Get Durable Object
-  const id = env.JOBS_ROOM.idFromName('global');
+  // Get Durable Object — use job ID for per-job rooms, or global
+  const url = new URL(request.url);
+  const jobId = url.searchParams.get('jobId') || 'global';
+  const id = env.JOBS_ROOM.idFromName(jobId);
   const stub = env.JOBS_ROOM.get(id);
 
   return stub.fetch(request);
@@ -72,15 +86,10 @@ router.all('*', () => error(404, 'Not found'));
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
-      console.log('Incoming request:', request.method, request.url);
-
       // Add env to request for middleware access
       (request as any).env = env;
 
-      // Call router with just the request
-      console.log('Calling router...');
       const response = await router.fetch(request, env, ctx);
-      console.log('Router returned:', response?.status);
 
       // Add CORS headers to response
       const headers = new Headers(response.headers);

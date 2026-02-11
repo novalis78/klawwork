@@ -8,6 +8,7 @@ import { Env } from '../index';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { query, queryOne, execute } from '../utils/db';
 import { generateId, calculateDistance } from '../utils/auth';
+import { fireWebhook } from '../utils/webhooks';
 
 export const jobsRouter = Router({ base: '/jobs' });
 
@@ -137,6 +138,13 @@ jobsRouter.post('/:id/accept', async (request: AuthenticatedRequest, env: Env) =
       [user!.id, jobId]
     );
 
+    // Notify agent
+    if (job.agent_id) {
+      fireWebhook(env, job.agent_id, 'job.accepted', jobId!, {
+        worker_id: user!.id,
+      });
+    }
+
     return json({
       message: 'Job accepted successfully',
       job: { ...job, status: 'assigned', worker_id: user!.id }
@@ -172,6 +180,13 @@ jobsRouter.post('/:id/start', async (request: AuthenticatedRequest, env: Env) =>
        WHERE id = ?`,
       [jobId]
     );
+
+    // Notify agent
+    if (job.agent_id) {
+      fireWebhook(env, job.agent_id, 'job.started', jobId!, {
+        worker_id: user!.id,
+      });
+    }
 
     return json({ message: 'Job started successfully' });
   } catch (err: any) {
@@ -235,6 +250,15 @@ jobsRouter.post('/:id/upload', async (request: AuthenticatedRequest, env: Env) =
       ]
     );
 
+    // Notify agent
+    if (job.agent_id) {
+      fireWebhook(env, job.agent_id, 'deliverable.uploaded', jobId!, {
+        deliverable_id: deliverableId,
+        file_type: 'photo',
+        caption,
+      });
+    }
+
     return json({
       message: 'File uploaded successfully',
       deliverable: {
@@ -288,6 +312,14 @@ jobsRouter.post('/:id/complete', async (request: AuthenticatedRequest, env: Env)
 
     // Job is now submitted for agent review
     // Payment is released when agent calls POST /agent/jobs/:id/approve
+
+    // Notify agent
+    if (job.agent_id) {
+      fireWebhook(env, job.agent_id, 'job.submitted', jobId!, {
+        worker_id: user!.id,
+        deliverable_count: deliverables[0].count,
+      });
+    }
 
     return json({
       message: 'Job submitted for review',

@@ -9,6 +9,7 @@ import { Env } from '../index';
 import { AgentRequest } from '../middleware/agentAuth';
 import { query, queryOne, execute } from '../utils/db';
 import { generateId } from '../utils/auth';
+import { fireWebhook } from '../utils/webhooks';
 
 export const agentRouter = Router({ base: '/agent' });
 
@@ -167,6 +168,13 @@ agentRouter.post('/jobs', async (request: AgentRequest, env: Env) => {
     );
 
     const job = await queryOne(env.DB, 'SELECT * FROM jobs WHERE id = ?', [jobId]);
+
+    // Webhook: job created
+    fireWebhook(env, agent!.id, 'job.created', jobId, {
+      title: body.title,
+      category: body.category,
+      payment_amount: body.payment_amount,
+    });
 
     return json({ job }, { status: 201 });
   } catch (err: any) {
@@ -417,6 +425,13 @@ agentRouter.post('/jobs/:id/approve', async (request: AgentRequest, env: Env) =>
       [totalPaid, agent!.id]
     );
 
+    // Webhook: job completed
+    fireWebhook(env, agent!.id, 'job.completed', jobId!, {
+      worker_id: job.worker_id,
+      payment_amount: totalPaid,
+      currency: job.payment_currency,
+    });
+
     return json({
       message: 'Job approved, payment released',
       job_id: jobId,
@@ -514,6 +529,13 @@ agentRouter.post('/jobs/:id/reject', async (request: AgentRequest, env: Env) => 
         [msgId, jobId, agent!.id, job.worker_id, `Job rejected: ${body.reason}`]
       );
     }
+
+    // Webhook: job rejected
+    fireWebhook(env, agent!.id, 'job.rejected', jobId!, {
+      reason: body.reason,
+      keep_assigned: keepAssigned,
+      new_status: keepAssigned ? 'in_progress' : 'available',
+    });
 
     return json({
       message: keepAssigned ? 'Job sent back for revision' : 'Job released back to pool',
@@ -628,6 +650,13 @@ agentRouter.post('/jobs/:id/cancel', async (request: AgentRequest, env: Env) => 
       );
     }
 
+    // Webhook: job cancelled
+    fireWebhook(env, agent!.id, 'job.cancelled', jobId!, {
+      previous_status: job.status,
+      refund_percent: refundPercent,
+      worker_id: job.worker_id || null,
+    });
+
     return json({
       message: 'Job cancelled',
       job_id: jobId,
@@ -682,6 +711,12 @@ agentRouter.post('/jobs/:id/message', async (request: AgentRequest, env: Env) =>
       'SELECT * FROM messages WHERE id = ?',
       [msgId]
     );
+
+    // Webhook: message sent
+    fireWebhook(env, agent!.id, 'job.message', jobId!, {
+      message_id: msgId,
+      sender_type: 'agent',
+    });
 
     return json({ message: 'Message sent', data: newMessage });
   } catch (err: any) {

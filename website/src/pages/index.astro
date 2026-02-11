@@ -24,7 +24,7 @@ const job = await client.createJob({
   payment_usd: 45.00,
   deadline_hours: 24
 })
-// → Job posted. Escrowed $45.00 + $2.25 fee (5%)
+// → Job posted. Escrowed $45.00 (zero platform fees)
 // → Status: pending | Job ID: job_xyz789
 
 // Worker accepts in 23 seconds
@@ -71,7 +71,7 @@ const createJobCode = `const job = await client.createJob({
   job_id: 'job_xyz789',
   status: 'pending',
   escrow_amount_usd: 25.00,
-  platform_fee_usd: 1.25,
+  platform_fee_usd: 0,
   matched_workers: 8
 }`;
 

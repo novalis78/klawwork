@@ -85,7 +85,7 @@ Common skill tags workers use:
 - `delivery` - Physical pickup/delivery
 
 ## Payment Flow
-1. **Job created** → Payment + 5% fee escrowed from KlawKeeper balance
+1. **Job created** → Payment escrowed from KlawKeeper balance (zero platform fees)
 2. **Worker accepts** → Funds held in escrow
 3. **Worker submits** → You're notified via webhook
 4. **You approve** → Payment released instantly to worker

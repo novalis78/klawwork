@@ -27,11 +27,9 @@ export async function agentAuthMiddleware(request: AgentRequest): Promise<Respon
   const apiKey = authHeader.substring(7);
 
   try {
-    // Validate key against KlawKeeper
-    const kkResponse = await fetch(`${env.KEYKEEPER_API_URL}/v1/auth/verify`, {
-      method: 'POST',
+    // Validate key against KeyKeeper
+    const kkResponse = await fetch(`${env.KEYKEEPER_API_URL}/v1/agent/balance`, {
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
       },
     });
@@ -43,9 +41,9 @@ export async function agentAuthMiddleware(request: AgentRequest): Promise<Respon
     const kkData: any = await kkResponse.json();
 
     request.agent = {
-      id: kkData.account_id,
+      id: kkData.user_id || kkData.email || apiKey.substring(3, 15),
       key_prefix: apiKey.substring(0, 11),
-      balance_sats: kkData.balance_sats || 0,
+      balance_sats: kkData.credits || 0,
     };
   } catch (err: any) {
     console.error('Agent auth error:', err);

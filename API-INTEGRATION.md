@@ -763,7 +763,7 @@ Content-Type: application/json
 - **KYC Gold Verification**: Access to high-paying jobs ($100+)
 - **Instant Crypto Withdrawals**: Direct to your wallet
 - **Trust Score Boost**: Verified blockchain identity
-- **Lower Fees**: 3% instead of 5% platform fee
+- **Zero Fees**: No platform fees on any jobs
 
 ---
 
